@@ -32,14 +32,20 @@ function ColumnContainer(props: Props) {
   };
 
   if (isDragging) {
-    return <>hellow</>;
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="bg-columnBackgroundColor opacity-40 border-2 border-rose-500 w-[350px] h-[500px] max-h-[500px] rounded-md flex flex-col"
+      ></div>
+    );
   }
 
   return (
     <div
       ref={setNodeRef}
       style={style}
-      className="bg-columnBackgroundColor w-[350px] h-[500px] max-h-[500px] rounded-md flex flex-col"
+      className="bg-columnBackgroundColor  w-[350px] h-[500px] max-h-[500px] rounded-md flex flex-col"
     >
       {/* Column title */}
       <div
