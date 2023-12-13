@@ -11,12 +11,14 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import PlusIcon from "../icons/PlusIcon";
-import { Column, Id } from "../types";
+import { Column, Id, Task } from "../types";
 import ColumnContainer from "./ColumnContainer";
 
 function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>([]);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
+
+  const [task, setTask] = useState<Task[]>([]);
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
@@ -44,6 +46,8 @@ function KanbanBoard() {
                   column={col}
                   deleteColumn={deleteColumn}
                   updateColumn={updateColumn}
+                  createTask={createTask}
+                  task={task.filter((task) => task.columnId === col.id)}
                 />
               ))}
             </SortableContext>
@@ -65,6 +69,7 @@ function KanbanBoard() {
                 column={activeColumn}
                 deleteColumn={deleteColumn}
                 updateColumn={updateColumn}
+                createTask={createTask}
               />
             )}
           </DragOverlay>,
@@ -73,6 +78,16 @@ function KanbanBoard() {
       </DndContext>
     </div>
   );
+
+  function createTask(columnId: Id) {
+    const newTask: Task = {
+      id: generateId(),
+      columnId,
+      content: `Task ${task.length + 1}`,
+    };
+
+    setTask([...task, newTask]);
+  }
 
   function createNewColumn() {
     const columnToAdd: Column = {
