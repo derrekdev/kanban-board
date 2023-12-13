@@ -47,6 +47,7 @@ function KanbanBoard() {
                   deleteColumn={deleteColumn}
                   updateColumn={updateColumn}
                   createTask={createTask}
+                  deleteTask={deleteTask}
                   task={task.filter((task) => task.columnId === col.id)}
                 />
               ))}
@@ -70,6 +71,8 @@ function KanbanBoard() {
                 deleteColumn={deleteColumn}
                 updateColumn={updateColumn}
                 createTask={createTask}
+                deleteTask={deleteTask}
+                task={task.filter((task) => task.columnId === activeColumn.id)}
               />
             )}
           </DragOverlay>,
@@ -87,6 +90,12 @@ function KanbanBoard() {
     };
 
     setTask([...task, newTask]);
+  }
+
+  function deleteTask(id: Id) {
+    const newTasks = task.filter((task) => task.id !== id);
+
+    setTask(newTasks);
   }
 
   function createNewColumn() {
